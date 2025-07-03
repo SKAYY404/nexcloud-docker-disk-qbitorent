@@ -8,6 +8,12 @@
         dest: /home/zora/nexcloud-docker-disk-qbitorent
         version: main
 
+    - name: Ensure the directory exists
+      file:
+        path: /home/zora/nexcloud-docker-disk-qbitorent
+        state: directory
+        mode: '0755'
+
     - name: Install docker-compose
       apt:
         name: docker-compose
