@@ -1,6 +1,5 @@
 ---
 - name: Deploy qBittorrent and Nextcloud using Docker Compose
-  hosts: localhost
   become: true
   tasks:
     - name: Copy docker-compose.yml to the target machine
@@ -9,7 +8,6 @@
         dest: /home/zora/docker-compose.yml
         owner: zora
         group: zora
-        mode: '0644'
 
     - name: Run Docker Compose to start the services
       command: docker-compose up -d
