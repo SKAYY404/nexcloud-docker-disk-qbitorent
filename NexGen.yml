@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+  qbittorrent:
+    image: linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Moscow
+    ports:
+      - 8080:8080  # Web UI
+      - 6881:6881  # Torrent traffic
+    volumes:
+      - /mnt/data/qbittorrent/config:/config        # Конфигурация qBittorrent
+      - /mnt/data/qbittorrent/downloads:/downloads  # Папка для скачанных торрентов
+    restart: unless-stopped
+
+  nextcloud:
+    image: nextcloud:latest
+    container_name: nextcloud
+    environment:
+      - MYSQL_PASSWORD=your_password
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+      - MYSQL_HOST=db
+    ports:
+      - 8081:80  # Web UI for Nextcloud
+    volumes:
+      - /mnt/data/nextcloud/data:/var/www/html       # Данные Nextcloud
+      - /mnt/data/qbittorrent/downloads:/var/www/html/nextcloud_data  # Общая папка для торрентов
+    restart: unless-stopped
+    depends_on:
+      - db
+
+  db:
+    image: mysql:5.7
+    container_name: nextcloud_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=root_password
+      - MYSQL_PASSWORD=your_password
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud
+    volumes:
+      - /mnt/data/db:/var/lib/mysql  # Хранение базы данных
+    restart: unless-stopped
