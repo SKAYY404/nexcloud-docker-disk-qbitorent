@@ -14,11 +14,11 @@
         state: directory
         mode: '0755'
 
-    # ДОБАВЬТЕ ЭТУ ЗАДАЧУ:
-- name: Generate docker-compose.yml from template
-  template:
-    src: docker-compose.yml.j2
-    dest: /home/zora/nexcloud-docker-disk-qbitorent/docker-compose.yml
+        # ДОБАВЬТЕ ЭТУ ЗАДАЧУ:
+    - name: Generate docker-compose.yml from template
+      template:
+        src: docker-compose.yml.j2
+        dest: /home/zora/nexcloud-docker-disk-qbitorent/docker-compose.yml
 
     - name: Install docker-compose
       apt:
