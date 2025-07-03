@@ -1,0 +1,30 @@
+---
+- name: Stop and remove qBittorrent and Nextcloud containers
+  hosts: NexCloud
+  become: true
+  tasks:
+    - name: Stop Docker Compose services
+      command: docker-compose down
+      args:
+        chdir: /home/zora/nexcloud-docker-disk-qbitorent
+      ignore_errors: yes
+
+    - name: Remove Docker Compose services and volumes
+      command: docker-compose down -v
+      args:
+        chdir: /home/zora/nexcloud-docker-disk-qbitorent
+      ignore_errors: yes
+
+    - name: Remove downloaded repository folder
+      file:
+        path: /home/zora/nexcloud-docker-disk-qbitorent
+        state: absent
+
+
+    - name: Clean up unused Docker resources
+      command: docker system prune -f
+      ignore_errors: yes
+
+    - name: Display cleanup completion message
+      debug:
+        msg: "Cleanup completed! All containers stopped and repository folder removed."
