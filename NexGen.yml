@@ -7,13 +7,19 @@
         repo: https://github.com/SKAYY404/nexcloud-docker-disk-qbitorent.git
         dest: /home/zora/nexcloud-docker-disk-qbitorent
         version: main
-      # Примечание: Клонируем репозиторий в /home/zora/nexcloud-docker-disk-qbitorent
 
     - name: Ensure the directory exists
       file:
         path: /home/zora/nexcloud-docker-disk-qbitorent
         state: directory
         mode: '0755'
+
+    # ДОБАВЬТЕ ЭТУ ЗАДАЧУ:
+    - name: Replace password in docker-compose.yml
+      replace:
+        path: /home/zora/nexcloud-docker-disk-qbitorent/docker-compose.yml
+        regexp: 'NEXTCLOUD_ADMIN_PASSWORD=admin123'
+        replace: 'NEXTCLOUD_ADMIN_PASSWORD={{ nextcloud_admin_password }}'
 
     - name: Install docker-compose
       apt:
@@ -25,4 +31,3 @@
       command: docker-compose up -d
       args:
         chdir: /home/zora/nexcloud-docker-disk-qbitorent
-      # Указываем, что Docker Compose должен запускаться в директории /home/zora/nexcloud-docker-disk-qbitorent
