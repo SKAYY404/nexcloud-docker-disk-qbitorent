@@ -21,9 +21,6 @@
         state: absent
 
 
-    - name: Clean up unused Docker resources
-      command: docker system prune -f
-      ignore_errors: yes
 
     - name: Display cleanup completion message
       debug:
