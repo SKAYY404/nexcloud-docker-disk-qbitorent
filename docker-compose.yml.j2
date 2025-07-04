@@ -17,7 +17,7 @@ services:
     restart: unless-stopped
 
   nextcloud:
-    image: nextcloud:latest
+    image: nextcloud:29-apache
     container_name: nextcloud
     environment:
       - SQLITE_DATABASE=nextcloud
