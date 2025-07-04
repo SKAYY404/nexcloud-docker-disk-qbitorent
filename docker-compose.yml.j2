@@ -19,7 +19,7 @@ services:
     restart: unless-stopped
 
   nextcloud:
-    image: nextcloud:29-apache
+    image: nextcloud:latest
     container_name: nextcloud
     ports:
       - 8081:80
