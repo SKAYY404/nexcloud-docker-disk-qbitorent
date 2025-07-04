@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   qbittorrent:
     image: linuxserver/qbittorrent
@@ -19,20 +21,8 @@ services:
   nextcloud:
     image: nextcloud:29-apache
     container_name: nextcloud
-    environment:
-      - SQLITE_DATABASE=nextcloud
-      - NEXTCLOUD_ADMIN_USER={{ nextcloud_username}}
-      - NEXTCLOUD_ADMIN_PASSWORD={{ nextcloud_admin_password }}
-      # Добавляем настройки для reverse proxy
-      - NEXTCLOUD_TRUSTED_DOMAINS= {{ nextcloud_domain  }}
-      - OVERWRITEPROTOCOL=https
-      - OVERWRITEHOST= {{ nextcloud_OVERWRITEHOST }} 
-      - OVERWRITEWEBROOT=""
-      - OVERWRITECLIURL={{ nextcloud_OVERWRITECLIURL }}
-      - TRUSTED_PROXIES={{ nextcloud_trust_proxy }}
-      - APACHE_DISABLE_REWRITE_IP=1
     ports:
-      - 8081:80  
+      - 8081:80
     volumes:
       - nextcloud_data:/var/www/html
       - /mnt/data/torrents:/mnt/downloads
