@@ -28,6 +28,8 @@ services:
       - NEXTCLOUD_TRUSTED_DOMAINS= {{ nextcloud_domain }} 
       - OVERWRITEPROTOCOL=https
       - OVERWRITECLIURL={{ nextcloud_OVERWRITECLIURL }}
+      - NEXTCLOUD_ENABLE_FILE_LOCKING=false
+
 
 
     ports:
